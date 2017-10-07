@@ -1,14 +1,32 @@
 import * as React from 'react';
 import './App.css';
-import d3 from 'd3';
+// import * as d3 from 'd3';
+import api from './api';
+import food from './interfaces/food';
 
-class App extends React.Component {
+interface state {
+  foods: food[];
+}
+
+class App extends React.Component<{}, state> {
+  constructor() {
+    super();
+    this.state = { foods: [] };
+
+    api.getFood().then((foods) => {
+      this.setState({ foods });
+    });
+  }
+
   render() {
     return (
       <div className="App">
-        <svg width="100%" height="500px">
+        {this.state.foods.map(food =>
+          <div>{food.description}</div>,
+        )}
+        {/* <svg width="100%" height="500px">
 
-        </svg>
+        </svg> */}
       </div>
     );
   }
