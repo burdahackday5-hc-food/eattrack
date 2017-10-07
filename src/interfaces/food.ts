@@ -1,5 +1,5 @@
 export default interface food {
-  date: number;
+  date: Date;
   description: string;
   picture?: ByteString;
   // answers: answer[];

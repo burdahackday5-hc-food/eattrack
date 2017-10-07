@@ -5,10 +5,10 @@ class Api {
     return new Promise<food[]>((resolve) => {
       resolve([{
         description: 'foo',
-        date: new Date().getTime(),
+        date: new Date(),
       }, {
         description: 'bar',
-        date: new Date().getTime(),
+        date: new Date(),
       }]);
     });
   }
