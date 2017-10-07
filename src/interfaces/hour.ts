@@ -1,4 +1,5 @@
 export default interface hour {
   label: string;
-  value: number;
+  from: number;
+  to: number;
 }

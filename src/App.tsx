@@ -31,7 +31,8 @@ class App extends React.Component<{}, state> {
 
   private getTimedFood(day: day, hour: hour) {
     return this.state.foods.filter((food) => {
-      return food.date.getDay() === day.value && food.date.getHours() === hour.value;
+      return food.date.getDay() === day.value &&
+             (food.date.getHours() >= hour.from && food.date.getHours() <= hour.to);
     });
   }
 
@@ -71,7 +72,7 @@ class App extends React.Component<{}, state> {
               {day.label}
               {hours.map((hour, hourIndex) =>
                 <circle
-                  key={hour.value}
+                  key={hour.label}
                   data-hour={hour.label}
                   cx={this.getX(hourIndex)}
                   cy={this.getY(dayIndex)}
