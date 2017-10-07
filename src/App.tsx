@@ -5,6 +5,7 @@ import PunchCard from './PunchCard';
 import FoodList from './FoodList';
 import Filter from './Filter';
 import food from './interfaces/food';
+import Login from './Login';
 
 interface state {
   foods: food[];
@@ -44,6 +45,7 @@ class App extends React.Component<{}, state> {
   public render() {
     return (
       <div className="App">
+        <Login/>
         <Filter value={this.state.filter} onChange={this.filterChange.bind(this)}/>
         <PunchCard value={this.getFilteredFoods()} onChange={this.foodSelection.bind(this)}/>
         <FoodList value={this.state.selectedFoods}/>
