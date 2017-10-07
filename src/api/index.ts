@@ -1,15 +1,18 @@
 import food from '../interfaces/food';
 
+const API_URL = 'http://localhost:8080';
+
 class Api {
-  getFood() {
-    return new Promise<food[]>((resolve) => {
-      resolve([{
-        description: 'foo',
-        date: new Date(),
-      }, {
-        description: 'bar',
-        date: new Date(),
-      }]);
+  getFood(): Promise<food[]> {
+    return fetch(API_URL, { method: 'get' }).then((response: Response) => {
+      return response.json();
+    }).then((response) => {
+      return response.map((food: any) => {
+        return {
+          ...food,
+          date: new Date(food.date),
+        };
+      });
     });
   }
 }
