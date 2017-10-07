@@ -2,12 +2,22 @@ const http = require('http');
 const chance = require('chance')();
 
 const FOOD_AMOUNT = 100;
+const ANSWER_COUNT = 3;
 const foods = [];
+
+function getAnswers() {
+  const result = [];
+  for (let i = 0; i < ANSWER_COUNT; i += 1) {
+    result.push(chance.bool());
+  }
+  return result;
+}
 
 for(let i = 0; i < FOOD_AMOUNT; i += 1) {
   foods.push({
-    description: chance.word(),    
+    description: chance.word(),
     date: chance.date({year: 2017}),
+    answers: getAnswers(),
   });
 }
 
