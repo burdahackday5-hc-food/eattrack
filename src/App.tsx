@@ -1,12 +1,19 @@
 import * as React from 'react';
 import './App.css';
-// import * as d3 from 'd3';
 import api from './api';
 import food from './interfaces/food';
 import day from './interfaces/day';
 import hour from './interfaces/hour';
 import days from './constants/days';
 import hours from './constants/hours';
+
+const X_OFFSET = 50;
+const X_FACTOR = 30;
+const Y_OFFSET = 50;
+const Y_FACTOR = 30;
+const MAX_CIRCLE = 15;
+
+const GRAPH_WIDTH = 900;
 
 interface state {
   foods: food[];
@@ -22,27 +29,58 @@ class App extends React.Component<{}, state> {
     });
   }
 
-  getTimedFood(day: day, hour: hour) {
+  private getTimedFood(day: day, hour: hour) {
     return this.state.foods.filter((food) => {
       return food.date.getDay() === day.value && food.date.getHours() === hour.value;
     });
   }
 
-  render() {
+  private getHighestSlot() {
+    let highestSlot = 0;
+    for (let dayIndex = 0; dayIndex < days.length; dayIndex += 1) {
+      for (let hourIndex = 0; hourIndex < hours.length; hourIndex += 1) {
+        const currentSlot = this.getTimedFood(days[dayIndex], hours[hourIndex]).length;
+        if (currentSlot > highestSlot) {
+          highestSlot = currentSlot;
+        }
+      }
+    }
+    return highestSlot;
+  }
+
+  private getX(index: number) {
+    return index * X_FACTOR + X_OFFSET;
+  }
+
+  private getY(index: number) {
+    return index * Y_FACTOR + Y_OFFSET;
+  }
+
+  private getRadius(highestSlot: number, currentSlot: number) {
+    return (currentSlot / highestSlot) * MAX_CIRCLE;
+  }
+
+  public render() {
+    const highestSlot = this.getHighestSlot();
+
     return (
       <div className="App">
-        {days.map(day =>
-          <div key={day.value} data-day={day.label}>
-            {day.label}
-            {hours.map(hour =>
-              <span key={hour.value} data-hour={hour.label}>{this.getTimedFood(day, hour).length}</span>,
-            )}
-          </div>,
-        )};
-
-        {/* <svg width="100%" height="500px">
-
-        </svg> */}
+        <svg width={GRAPH_WIDTH} height="500px">
+          {days.map((day, dayIndex) =>
+            <g key={day.value} data-day={day.label}>
+              {day.label}
+              {hours.map((hour, hourIndex) =>
+                <circle
+                  key={hour.value}
+                  data-hour={hour.label}
+                  cx={this.getX(hourIndex)}
+                  cy={this.getY(dayIndex)}
+                  r={this.getRadius(highestSlot, this.getTimedFood(day, hour).length)}
+                />,
+              )}
+            </g>,
+          )};
+        </svg>
       </div>
     );
   }
