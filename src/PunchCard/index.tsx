@@ -13,14 +13,16 @@ const Y_FACTOR = 30;
 const MAX_CIRCLE = 15;
 
 const GRAPH_WIDTH = 900;
+const GRAPH_HEIGHT = 300;
 
 interface props {
-  foods: food[];
+  value: food[];
+  onChange: (food: food[]) => void;
 }
 
 class PunchCard extends React.Component<props, {}> {
   private getTimedFood(day: day, hour: hour) {
-    return this.props.foods.filter((food) => {
+    return this.props.value.filter((food) => {
       return food.date.getDay() === day.value &&
              (food.date.getHours() >= hour.from && food.date.getHours() <= hour.to);
     });
@@ -48,26 +50,31 @@ class PunchCard extends React.Component<props, {}> {
   }
 
   private getRadius(highestSlot: number, currentSlot: number) {
-    return (currentSlot / highestSlot) * MAX_CIRCLE;
+    if (highestSlot === 0) {
+      return 0;
+    } else {
+      return (currentSlot / highestSlot) * MAX_CIRCLE;
+    }
   }
 
   public render() {
     const highestSlot = this.getHighestSlot();
 
     return (
-      <svg width={GRAPH_WIDTH} height="500px">
+      <svg width={GRAPH_WIDTH} height={GRAPH_HEIGHT}>
         {days.map((day, dayIndex) =>
           <g key={day.value} data-day={day.label}>
             {day.label}
-            {hours.map((hour, hourIndex) =>
-              <circle
+            {hours.map((hour, hourIndex) => {
+              const slotFoods = this.getTimedFood(day, hour);
+              return <circle
                 key={hour.label}
                 data-hour={hour.label}
                 cx={this.getX(hourIndex)}
                 cy={this.getY(dayIndex)}
-                r={this.getRadius(highestSlot, this.getTimedFood(day, hour).length)}
-              />,
-            )}
+                onClick={() => this.props.onChange(slotFoods)}
+                r={this.getRadius(highestSlot, slotFoods.length)} />;
+            })}
           </g>,
         )};
       </svg>

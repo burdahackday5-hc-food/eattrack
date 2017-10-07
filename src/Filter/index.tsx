@@ -8,12 +8,12 @@ interface props {
 
 const FILTERS = ['All', 'Kohlenhydrate', 'Small Portion', 'Low Sodium'];
 
-class App extends React.Component<props, {}> {
+class Filter extends React.Component<props, {}> {
   public render() {
     return (
       <ul>
         {FILTERS.map((filter, index) =>
-          <li 
+          <li key={index}
             onClick={() => this.props.onChange(index)}
             className={this.props.value === index ? 'filter--activated' : ''}>{filter}</li>,
         )}
@@ -22,4 +22,4 @@ class App extends React.Component<props, {}> {
   }
 }
 
-export default App;
+export default Filter;
