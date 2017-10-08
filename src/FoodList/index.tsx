@@ -12,8 +12,8 @@ class Filter extends React.Component<props, {}> {
     return (
       <ul>
         {this.props.value.map((food, index) =>
-          <li key={index}>{food.description}:&nbsp;
-            {food.answers.map((answer: any, answerIndex: number) => answer ? answers[answerIndex] : '')}
+          <li key={index}>{food.date.toLocaleString()} — {food.description}:&nbsp;
+            {food.answers.map((answer: any, answerIndex: number) => ' ' + (answer ? answers[answerIndex] : ''))}
           </li>,
         )}
       </ul>
