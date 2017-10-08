@@ -6,7 +6,8 @@
     "@types/d3": "^4.10.1",
     "d3": "^4.11.0",
     "react": "^16.0.0",
-    "react-dom": "^16.0.0"
+    "react-dom": "^16.0.0",
+    "hc-sdk-js": "git+git@github.com:gesundheitscloud/hc-sdk-js.git"
   },
   "devDependencies": {
     "@types/jest": "^21.1.2",
@@ -18,7 +19,7 @@
     "tslint-config-airbnb": "^5.3.0"
   },
   "scripts": {
-    "start": "PORT=8080 react-scripts-ts start",
+    "start": "PORT=8081 react-scripts-ts start",
     "build": "react-scripts-ts build",
     "test": "react-scripts-ts test --env=jsdom",
     "eject": "react-scripts-ts eject"

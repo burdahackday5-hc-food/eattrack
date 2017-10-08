@@ -7985,7 +7985,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
  * 
  */
 /**
- * bluebird build version 3.5.0
+ * bluebird build version 3.5.1
  * Features enabled: core, race, call_get, generators, map, nodeify, promisify, props, reduce, settle, some, using, timers, filter, any, each
 */
 !function (e) {
@@ -8682,7 +8682,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                 Promise.prototype._ensurePossibleRejectionHandled = function () {
                     if ((this._bitField & 524288) !== 0) return;
                     this._setRejectionIsUnhandled();
-                    async.invokeLater(this._notifyUnhandledRejection, this, undefined);
+                    var self = this;
+                    setTimeout(function () {
+                        self._notifyUnhandledRejection();
+                    }, 1);
                 };
 
                 Promise.prototype._notifyUnhandledRejectionIsHandled = function () {
@@ -11293,7 +11296,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                 _dereq_("./synchronous_inspection")(Promise);
                 _dereq_("./join")(Promise, PromiseArray, tryConvertToPromise, INTERNAL, async, getDomain);
                 Promise.Promise = Promise;
-                Promise.version = "3.5.0";
+                Promise.version = "3.5.1";
                 _dereq_('./map.js')(Promise, PromiseArray, apiRejection, tryConvertToPromise, INTERNAL, debug);
                 _dereq_('./call_get.js')(Promise);
                 _dereq_('./using.js')(Promise, apiRejection, tryConvertToPromise, createContext, INTERNAL, debug);
@@ -13124,7 +13127,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             }
 
             function isError(obj) {
-                return obj !== null && (typeof obj === "undefined" ? "undefined" : _typeof(obj)) === "object" && typeof obj.message === "string" && typeof obj.name === "string";
+                return obj instanceof Error || obj !== null && (typeof obj === "undefined" ? "undefined" : _typeof(obj)) === "object" && typeof obj.message === "string" && typeof obj.name === "string";
             }
 
             function markAsOriginatingFromRejection(e) {

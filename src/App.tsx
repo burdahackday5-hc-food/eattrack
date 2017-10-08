@@ -1,6 +1,6 @@
 import * as React from 'react';
 import './App.css';
-import api from './api';
+// import api from './api';
 import PunchCard from './PunchCard';
 import FoodList from './FoodList';
 import Filter from './Filter';
@@ -18,9 +18,9 @@ class App extends React.Component<{}, state> {
     super();
     this.state = { foods: [], selectedFoods: [], filter: 0 };
 
-    api.getFood().then((foods) => {
-      this.setState({ foods });
-    });
+    // api.getFood().then((foods) => {
+    //   this.setState({ foods });
+    // });
   }
 
   private filterChange(filter: number) {
@@ -42,13 +42,23 @@ class App extends React.Component<{}, state> {
     console.log(selectedFoods);
   }
 
+  private addFood(food: food) {
+    this.setState({
+      foods: this.state.foods.concat(food),
+    });
+  }
+
   public render() {
     return (
       <div className="App">
-        <Login/>
-        <Filter value={this.state.filter} onChange={this.filterChange.bind(this)}/>
-        <PunchCard value={this.getFilteredFoods()} onChange={this.foodSelection.bind(this)}/>
-        <FoodList value={this.state.selectedFoods}/>
+        <Login addFood={(food: food) => this.addFood(food)}/>
+        {this.state.foods.length > 0 && 
+          <span>
+            <Filter value={this.state.filter} onChange={this.filterChange.bind(this)}/>
+            <PunchCard value={this.getFilteredFoods()} onChange={this.foodSelection.bind(this)}/>
+            <FoodList value={this.state.selectedFoods}/>
+          </span>
+        }
       </div>
     );
   }
