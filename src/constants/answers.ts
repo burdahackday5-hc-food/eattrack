@@ -1,1 +1,1 @@
-export default ['Kohlenhydrate', 'Small Portion', 'Low Sodium'];
+export default ['No carbohydrates', 'Small Portion', 'Low Sodium'];
