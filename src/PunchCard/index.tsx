@@ -6,7 +6,8 @@ import hour from '../interfaces/hour';
 import days from '../constants/days';
 import hours from '../constants/hours';
 
-const X_OFFSET = 50;
+const TEXT_X_OFFSET = 10;
+const X_OFFSET = 150;
 const X_FACTOR = 30;
 const Y_OFFSET = 50;
 const Y_FACTOR = 30;
@@ -63,6 +64,9 @@ class PunchCard extends React.Component<props, {}> {
     return (
       <svg width={GRAPH_WIDTH} height={GRAPH_HEIGHT}>
         {days.map((day, dayIndex) =>
+          <text key={dayIndex} x={TEXT_X_OFFSET} y={this.getY(dayIndex)} >{day.label}</text>,
+        )}
+        {days.map((day, dayIndex) =>
           <g key={day.value} data-day={day.label}>
             {day.label}
             {hours.map((hour, hourIndex) => {
@@ -76,7 +80,10 @@ class PunchCard extends React.Component<props, {}> {
                 r={this.getRadius(highestSlot, slotFoods.length)} />;
             })}
           </g>,
-        )};
+        )}
+        {hours.map((hour, hourIndex) =>
+          <text key={hourIndex} x={this.getX(hourIndex) - 3} y={this.getY(days.length)} >{hour.label}</text>,
+        )}
       </svg>
     );
   }
