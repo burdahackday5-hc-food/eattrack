@@ -6,8 +6,7 @@
     "@types/d3": "^4.10.1",
     "d3": "^4.11.0",
     "react": "^16.0.0",
-    "react-dom": "^16.0.0",
-    "hc-sdk-js": "git+git@github.com:gesundheitscloud/hc-sdk-js.git"
+    "react-dom": "^16.0.0"
   },
   "devDependencies": {
     "@types/jest": "^21.1.2",
