@@ -1,6 +1,6 @@
 import food from '../interfaces/food';
 
-const API_URL = 'http://localhost:8080';
+const API_URL = 'http://localhost:8082';
 
 class Api {
   getFood(): Promise<food[]> {

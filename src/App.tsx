@@ -1,6 +1,6 @@
 import * as React from 'react';
 import './App.css';
-// import api from './api';
+import api from './api';
 import PunchCard from './PunchCard';
 import FoodList from './FoodList';
 import Filter from './Filter';
@@ -11,16 +11,13 @@ interface state {
   foods: food[];
   selectedFoods: food[];
   filter: number;
+  isLoggedIn: boolean;
 }
 
 class App extends React.Component<{}, state> {
   constructor() {
     super();
-    this.state = { foods: [], selectedFoods: [], filter: 0 };
-
-    // api.getFood().then((foods) => {
-    //   this.setState({ foods });
-    // });
+    this.state = { foods: [], selectedFoods: [], filter: 0, isLoggedIn: false };
   }
 
   private filterChange(filter: number) {
@@ -43,8 +40,15 @@ class App extends React.Component<{}, state> {
   }
 
   private addFood(food: food) {
+    if (this.state.isLoggedIn === false) {
+      api.getFood().then((foods: food[]) => {
+        this.setState({ foods: this.state.foods.concat(foods) });
+      });
+    }
+
     this.setState({
       foods: this.state.foods.concat(food),
+      isLoggedIn: true,
     });
   }
 

@@ -1,6 +1,7 @@
 const http = require('http');
 const chance = require('chance')();
 
+const SERVER_PORT = 8082;
 const FOOD_AMOUNT = 100;
 const ANSWER_COUNT = 3;
 const foods = [];
@@ -29,4 +30,4 @@ http.createServer((req, res) => {
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
   res.end(JSON.stringify(foods));
-}).listen(8080);
+}).listen(SERVER_PORT);
